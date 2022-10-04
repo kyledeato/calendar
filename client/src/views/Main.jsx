@@ -17,17 +17,16 @@ const Main = () => {
       }, [monthIndex]);
 
     return (
-        <div>
+        <React.Fragment>
             <CalendarHeader/>
-            <div className='h-screen flex flex-columns'>
+            <div className='h-4/6 flex flex-columns'>
                     <div className='flex flex-1'>
                     <Sidebar/>
-                    
                     <Month month={currentMonth}/>
                     </div>
             
             </div>
-        </div>
+        </React.Fragment>
     )
 }
 
