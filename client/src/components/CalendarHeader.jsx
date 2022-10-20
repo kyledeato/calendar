@@ -1,8 +1,14 @@
 import dayjs from 'dayjs';
 import React, { useContext } from 'react'
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import GlobalContext from '../context/GlobalContext'
+import axios from 'axios'
+import Logout from './Logout/Logout';
 
-const CalendarHeader = () => {
+const CalendarHeader = (props) => {
+  const {user} = props
   const { monthIndex, setMonthIndex } = useContext(GlobalContext);
 
   const handlePrevMonth = () => {
@@ -12,6 +18,8 @@ const CalendarHeader = () => {
   const handleNextMonth = () => {
     setMonthIndex(monthIndex + 1)
   }
+
+
 
   return (
     <header className='px-4 py-2 flex items-center'>
@@ -28,6 +36,9 @@ const CalendarHeader = () => {
       <h2 className='ml-4 text-xl text-gray-500 font-bold'>
         {dayjs(new Date(dayjs().year(), monthIndex)).format("MMMM YYYY")}
       </h2>
+      <br />
+      <h1>Hello, {user.username}</h1>
+      <Logout/>
     </header>
   )
 }

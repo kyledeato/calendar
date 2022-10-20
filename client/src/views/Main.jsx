@@ -7,7 +7,7 @@ import { useState } from 'react'
 import GlobalContext from '../context/GlobalContext'
 import { useContext } from 'react'
 import { useEffect } from 'react'
-
+import axios from 'axios'
 const Main = () => {
     const [currentMonth, setCurrentMonth] = useState(getMonth())
     const {monthIndex} = useContext(GlobalContext)
@@ -16,13 +16,25 @@ const Main = () => {
         setCurrentMonth(getMonth(monthIndex));
       }, [monthIndex]);
 
+      const [user, setUser] = useState({username: "guest"});
+
+
+    useEffect(() => {
+        axios.get('http://localhost:8000/api/auth', {withCredentials: true})
+            .then(res => {
+            console.log("USE EFFECT: ",res.data)
+            setUser(res.data)
+            })
+            .catch(err=> console.log(err))
+    }, [])
+
     return (
         <React.Fragment>
-            <CalendarHeader/>
+            <CalendarHeader user={user}/>
             <div className='h-4/6 flex flex-columns'>
                     <div className='flex flex-1'>
                     <Sidebar/>
-                    <Month month={currentMonth}/>
+                    <Month month={currentMonth} user={user._id}/>
                     </div>
             
             </div>
