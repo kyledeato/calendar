@@ -16,7 +16,9 @@ const Main = () => {
         setCurrentMonth(getMonth(monthIndex));
       }, [monthIndex]);
 
-      const [user, setUser] = useState({username: "guest"});
+    const [user, setUser] = useState({username: "guest"});
+    const userID = user._id;
+
 
 
     useEffect(() => {
@@ -24,6 +26,7 @@ const Main = () => {
             .then(res => {
             console.log("USE EFFECT: ",res.data)
             setUser(res.data)
+            console.log(user._id)
             })
             .catch(err=> console.log(err))
     }, [])
@@ -34,7 +37,7 @@ const Main = () => {
             <div className='h-4/6 flex flex-columns'>
                     <div className='flex flex-1'>
                     <Sidebar/>
-                    <Month month={currentMonth} user={user._id}/>
+                    <Month month={currentMonth} userID={userID}/>
                     </div>
             
             </div>

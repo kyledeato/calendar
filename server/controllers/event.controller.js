@@ -21,6 +21,20 @@ module.exports = {
         Event.find({})
             .then(event => response.json(event))
             .catch(err => response.json(err))
+    },
+
+    updateEvent: (request, response) => {
+        console.log("HERE IN UPDATE")
+        console.log(request.body)
+        Event.findByIdAndUpdate({_id:request.params.id}, request.body, {new:true})
+            .then(updatedEvent => response.json(updatedEvent))
+            .catch(err => response.json(err))
+    },
+
+    deleteEvent: (request, response) => {
+        Event.deleteOne({_id:request.params.id})
+        .then(deleteConfirm => response.json(deleteConfirm))
+        .catch(err=> response.json(err))
     }
 }
 

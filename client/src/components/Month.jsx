@@ -3,22 +3,25 @@ import Day from './Day'
 import axios from 'axios'
 import dayjs from 'dayjs'
 const Month = (props) => {
-  const {month, user} = props
+  const {month, user, userID} = props
   const [event, setEvent] = useState([])
   const [list, setList] = useState([])
-  console.log(month)
+  const [refresh, setRefresh] = useState(false)
+
+  //REFRESH LIST IS COMING FROM HERE
   useEffect(() => {
     axios.get("http://localhost:8000/api/event/")
       .then((res) => {
         setEvent(res.data)
-        console.log("events:", event)
+        console.log(res.data)
+        setRefresh(false)
       })
       .catch(err => {
         console.log(err)
       })
-  },[user])
+  },[month, refresh, list])
 
-
+console.log(userID)
   // useEffect(() => {
   //   const listOfEvents = []
   //   event.map(event => {
@@ -39,12 +42,7 @@ const Month = (props) => {
         {month.map((row, i) => {
             return <React.Fragment key={i}>
                 {row.map((day, idx)=> {
-                    // {event.map(event=> {
-                    //   if (event.date === day.format('MM-DD-YY')){
-                    //     setList(event)
-                    //   }
-                    // })}
-                     return <Day day={day} key={idx} rowIdx={i} user={user} event={event} list={list}/>
+                     return <Day day={day} key={idx} rowIdx={i} user={user} event={event} list={list} userID={userID} refresh={()=>setRefresh(true)}/>
                 })}
             </React.Fragment>
         })}
