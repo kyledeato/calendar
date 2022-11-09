@@ -1,8 +1,11 @@
 import React from 'react'
 
-const Sidebar = () => {
+const Sidebar = (props) => {
+  const {monthBg} = props
   return (
-    <div>Sidebar</div>
+    <div className={`bg-skin-${monthBg.toLowerCase()}` }>
+      
+      Sidebar</div>
   )
 }
 

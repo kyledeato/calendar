@@ -8,9 +8,11 @@ import GlobalContext from '../context/GlobalContext'
 import { useContext } from 'react'
 import { useEffect } from 'react'
 import axios from 'axios'
+import dayjs from 'dayjs'
 const Main = () => {
     const [currentMonth, setCurrentMonth] = useState(getMonth())
     const {monthIndex} = useContext(GlobalContext)
+    const [monthBg, setMonthBg] = useState("")
 
     useEffect(() => {
         setCurrentMonth(getMonth(monthIndex));
@@ -24,20 +26,24 @@ const Main = () => {
     useEffect(() => {
         axios.get('http://localhost:8000/api/auth', {withCredentials: true})
             .then(res => {
-            console.log("USE EFFECT: ",res.data)
             setUser(res.data)
-            console.log(user._id)
+            
             })
             .catch(err=> console.log(err))
     }, [])
 
+    useEffect(() => {
+        setMonthBg(dayjs(new Date(dayjs().year(), monthIndex)).format("MMMM"))
+ 
+    }, [currentMonth, monthIndex])
+
     return (
         <React.Fragment>
-            <CalendarHeader user={user}/>
-            <div className='h-4/6 flex flex-columns'>
+            <CalendarHeader user={user} monthBg={monthBg}/>
+            <div className='h-4/6 flex flex-columns '>
                     <div className='flex flex-1'>
-                    <Sidebar/>
-                    <Month month={currentMonth} userID={userID}/>
+                    <Sidebar monthBg={monthBg}/>
+                    <Month month={currentMonth} userID={userID} monthBg={monthBg}/>
                     </div>
             
             </div>
