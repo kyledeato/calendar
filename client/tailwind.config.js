@@ -13,7 +13,8 @@ module.exports = {
       backgroundColor: {
         skin: {
           november: 'var(--bg-color-november)',
-          novemberPrimary: 'var(--bg-color-novemberPrimary)'
+          novemberPrimary: 'var(--bg-color-novemberPrimary)',
+          novemberSecondary: 'var(--bg-color-novemberSecondary)',
         }
       }
     },

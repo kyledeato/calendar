@@ -43,6 +43,7 @@ const Main = () => {
             <div className='h-4/6 flex flex-columns '>
                     <div className='flex flex-1'>
                     <Sidebar monthBg={monthBg}/>
+                    
                     <Month month={currentMonth} userID={userID} monthBg={monthBg}/>
                     </div>
             

@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { useContext } from 'react'
 import Day from './Day'
 import axios from 'axios'
-import dayjs from 'dayjs'
+import day from 'dayjs'
 import GlobalContext from '../context/GlobalContext'
 
 const Month = (props) => {
@@ -29,14 +29,24 @@ const Month = (props) => {
 
 
   return (
+    
     <div className={`flex-1 grid grid-cols-7 grid-rows-5 gap-1 bg-skin-${monthBg.toLowerCase()} pr-6 pb-6`}>
 
 
         {/* row represents weeks */}
+        
         {month.map((row, i) => {
             return <React.Fragment key={i}>
                 {row.map((day, idx)=> {
-                     return <Day monthBg={monthBg} day={day} key={idx} rowIdx={i} user={user} event={event} list={list} userID={userID} refresh={()=>setRefresh(true)}/>
+                     return  <div> 
+                      {i === 0 && (
+            <p className='text-m mt-1 text-center font-bold'> {day.format('dddd')}</p>
+          )}
+                       <Day monthBg={monthBg} day={day} key={idx} rowIdx={i} user={user} event={event} list={list} userID={userID} refresh={()=>setRefresh(true)}/>
+
+                     </div>
+                     
+                     
                 })}
             </React.Fragment>
         })}

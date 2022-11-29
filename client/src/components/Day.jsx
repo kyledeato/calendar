@@ -6,31 +6,40 @@ const Day = (props) => {
   const {user, day, rowIdx, event, userID, refresh, monthBg} = props
   const [list, setList] = useState([])
   const currentMonth = dayjs().format("DD-MM-YY")
+  const [dayColor, setDayColor] = useState("")
   const getCurrentDayClass = () => {
     return day.format("DD-MM-YY") === dayjs().format("DD-MM-YY") ? "bg-blue-600 text-white rounded-full w-7" : ''
   }
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
-    console.log(monthBg)
+    // console.log("monthBg", monthBg)
+    console.log(day.format("MMMM"))
+
+    if (day.format("MMMM") !== monthBg){
+      console.log(day.format("MMMM"), "!==",  monthBg)
+      setDayColor(`bg-skin-${monthBg.toLowerCase()}Secondary`)
+    } else {
+      console.log(day.format("MMMM"), "====",  monthBg)
+      setDayColor(`bg-skin-${monthBg.toLowerCase()}Primary`)
+    }
     const listOfEvents = []
     event.map(event => {
 
       if (event.date === day.format('MM-DD-YYYY')) {
         listOfEvents.push(event)
- 
       }
     })
     setList(listOfEvents)
-  }, [day, user, event, isOpen, refresh])
 
+    
+  }, [day, user, event, isOpen, refresh, monthBg, dayColor])
 
+// bg-skin-novemberPrimary border-skin-november
   return (
-    <div className={`border-2 flex flex-col border-skin-${monthBg.toLowerCase()} bg-skin-${monthBg.toLowerCase()}Primary shadow-md  w-full  max-h-55 h-full`}>
+    <div className={` border-2 flex flex-col border-skin-${monthBg.toLowerCase()} ${dayColor} shadow-md  w-full  max-h-55 h-full `}>
         <header className='flex flex-col items-center text-white'>
-          {rowIdx === 0 && (
-            <p className='text-sm mt-1'> {day.format('ddd').toUpperCase()}</p>
-          )}
+
             <p className={`text-white  text-sm p-1 my-1 text-center ${getCurrentDayClass()}`}>{day.format('DD')}</p>
         </header>
 
